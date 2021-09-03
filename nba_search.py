@@ -46,6 +46,7 @@ from requests import post
 from requests import codes
 import math
 import json
+import pandas as pd
 from intent import Loki_player
 
 with open("account.info", encoding="utf-8") as f:
@@ -58,6 +59,7 @@ LOKI_KEY = accountDICT["loki_project_key"]
 # INTENT_FILTER = []        => 比對全部的意圖 (預設)
 # INTENT_FILTER = [intentN] => 僅比對 INTENT_FILTER 內的意圖
 INTENT_FILTER = []
+
 
 class LokiResult():
     status = False
@@ -162,6 +164,7 @@ class LokiResult():
             rst = lokiResultDICT["argument"]
         return rst
 
+
 def runLoki(inputLIST, filterLIST=[]):
     resultDICT = {}
     lokiRst = LokiResult(inputLIST, filterLIST)
@@ -171,10 +174,10 @@ def runLoki(inputLIST, filterLIST=[]):
                 # player
                 if lokiRst.getIntent(index, resultIndex) == "player":
                     resultDICT = Loki_player.getResult(key, lokiRst.getUtterance(index, resultIndex), lokiRst.getArgs(index, resultIndex), resultDICT)
-
     else:
         resultDICT = {"msg": lokiRst.getMessage()}
     return resultDICT
+
 
 def testLoki(inputLIST, filterLIST):
     INPUT_LIMIT = 20
@@ -183,14 +186,16 @@ def testLoki(inputLIST, filterLIST):
 
 
 if __name__ == "__main__":
-    # player
-    print("[TEST] player")
-    inputLIST = ['公牛主力是誰','公牛明星是誰','公牛誰是主力','誰是公牛的主力','誰是公牛最強的球員','誰是公牛最厲害的球員','誰是公牛籃球最強的球員','誰是公牛籃球最厲害的球員']
-    testLoki(inputLIST, ['player'])
-    print("")
 
-    # 輸入其它句子試看看
-    #inputLIST = ["輸入你的內容1", "輸入你的內容2"]
-    #filterLIST = []
-    #resultDICT = runLoki(inputLIST, filterLIST)
-    #print("Result => {}".format(resultDICT))
+    # inputLIST = ['公牛主力是誰','公牛明星是誰','公牛誰是主力','誰是公牛的主力','誰是公牛最強的球員','誰是公牛最厲害的球員','誰是公牛籃球最強的球員','誰是公牛籃球最厲害的球員']
+    # testLoki(inputLIST, ['player'])
+
+    df = pd.read_csv('./intent/stats.csv')
+    
+    inputLIST = ['誰是國王隊最強的球員'] 
+    filterLIST = []
+    resultDICT = runLoki(inputLIST, filterLIST)
+    team = resultDICT['team'][0]
+    stats = df[(df['team']==team) & (df['season']==2020)]
+    player = stats.loc[stats['pts_per_game']==max(stats['pts_per_game'])]  
+    print(player['player_name'].values[0], '平均每場得分', round(player['pts_per_game'].values[0], 2))

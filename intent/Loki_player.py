@@ -23,10 +23,12 @@ with open("./intent/nba_teams.json", encoding="utf-8") as f:
 
 
 def get_team(resultDICT, args):
+    """Get NBA team name"""
+    print(args)
     for i in range(len(args)):
         for key in teamDICT.keys():
             if args[i] in teamDICT[key]:
-                resultDICT['team'].append(args[i])
+                resultDICT['team'].append(key)
     return resultDICT
 
 
