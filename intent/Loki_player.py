@@ -21,14 +21,16 @@ DEBUG_player = True
 with open("./intent/nba_teams.json", encoding="utf-8") as f:
     teamDICT = json.loads(f.read())
 
-statDICT = {'得分':[], 
-            '籃板':['搶籃板'], '助攻':[], 
-            '阻攻':['火鍋', '蓋火鍋','搧帽', '蓋帽'], 
-            '抄截':[]}
+statDICT = {'pts':['得分'], 
+            'reb':['籃板', '搶籃板'], 'ast':['助攻'], 
+            'blk':['阻攻', '火鍋', '蓋火鍋','搧帽', '蓋帽'], 
+            'stl':['抄截']}
 
 aggDICT = {'平均':['場均'], '單場':['一場']}
 
-levelDICT = {'平均':['場均'], '單場':['一場']}
+levelDICT = {'平均':['平均', '場均'], '單場':['單場', '一場']}
+
+#stat_index = {'得分': 'pts', '籃板': 'reb', '助攻':'ast', '阻攻':'stl', '抄截':'blk' }
 
 
 def get_team(resultDICT, args):
