@@ -4,8 +4,9 @@
 import discord
 import json
 import pandas as pd
-
-from nba_search import * 
+import pandasql as ps
+from datapuller import DataPuller
+from nba_search import *
 
 with open("account.info", encoding="utf-8") as f:
     accountDICT = json.loads(f.read())
@@ -26,23 +27,40 @@ class BotClient(discord.Client):
         if self.user.mentioned_in(message):
             print("本 bot 被叫到了！")
             msg = message.content.replace("<@!{}> ".format(self.user.id), "")
-            if msg == 'ping':
+            
+            if msg.strip() == 'ping':
                 await message.reply('pong')
-            elif msg == 'ping ping':
+            elif msg.strip() == 'ping ping':
                 await message.reply('pong pong')
             else:
-                
+
                 filterLIST = []
                 resultDICT = runLoki([msg], filterLIST)        
-                df = pd.read_csv('./intent/stats.csv')
+                df = pd.read_csv('./test_data.csv')
 
                 team = resultDICT['team'][0]
-                stats = df[(df['team']==team) & (df['season']==2020)]
-                player = stats.loc[stats['pts_per_game']==max(stats['pts_per_game'])]  
-                output = player['player_name'].values[0] + ' 平均每場得分: ' + str(round(player['pts_per_game'].values[0], 2))
+                stat = resultDICT['stat'][0]
+                level = resultDICT['level'][0]
 
-                await message.reply(output)
+                if level == '平均':
+                    qry = DataPuller.get_agg_stats(stat, 10, team, 2020)
+                elif level == '單場':
+                    qry = DataPuller.get_single_game_stats(stat, 10, team, 2020)
+                else:
+                    raise ValueError('invalid input') 
 
+                statDICT = {'pts':['得分'], 
+                            'reb':['籃板', '搶籃板'], 'ast':['助攻'], 
+                            'blk':['阻攻', '火鍋', '蓋火鍋','搧帽', '蓋帽'], 
+                            'stl':['抄截']}
+
+                result = ps.sqldf(qry, locals())
+                reply_message = level + statDICT[stat][0] + '最高的是' \
+                                + result['player_name'].iloc[0] + ': ' + str(round(result['target_stat'].iloc[0], 2))
+
+                await message.reply(reply_message)
+                
+        
 
 if __name__ == "__main__":
     
