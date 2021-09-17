@@ -30,7 +30,7 @@ aggDICT = {'平均':['場均'], '單場':['一場']}
 
 levelDICT = {'平均':['平均', '場均'], '單場':['單場', '一場']}
 
-#stat_index = {'得分': 'pts', '籃板': 'reb', '助攻':'ast', '阻攻':'stl', '抄截':'blk' }
+stat_index = {'得分': 'pts', '籃板': 'reb', '助攻':'ast', '阻攻':'stl', '抄截':'blk' }
 
 
 def get_team(resultDICT, args):
