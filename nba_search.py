@@ -47,7 +47,7 @@ from requests import codes
 import math
 import json
 import pandas as pd
-from intent import Loki_player
+from intent import Loki_player, Loki_stat
 
 with open("account.info", encoding="utf-8") as f:
     accountDICT = json.loads(f.read())
@@ -174,6 +174,11 @@ def runLoki(inputLIST, filterLIST=[]):
                 # player
                 if lokiRst.getIntent(index, resultIndex) == "player":
                     resultDICT = Loki_player.getResult(key, lokiRst.getUtterance(index, resultIndex), lokiRst.getArgs(index, resultIndex), resultDICT)
+
+                # stat
+                if lokiRst.getIntent(index, resultIndex) == "stat":
+                    resultDICT = Loki_stat.getResult(key, lokiRst.getUtterance(index, resultIndex), lokiRst.getArgs(index, resultIndex), resultDICT)
+
     else:
         resultDICT = {"msg": lokiRst.getMessage()}
     return resultDICT
@@ -185,17 +190,9 @@ def testLoki(inputLIST, filterLIST):
         resultDICT = runLoki(inputLIST[i*INPUT_LIMIT:(i+1)*INPUT_LIMIT], filterLIST)
 
 
+def main():
+    return 
+
+
 if __name__ == "__main__":
-
-    # inputLIST = ['公牛主力是誰','公牛明星是誰','公牛誰是主力','誰是公牛的主力','誰是公牛最強的球員','誰是公牛最厲害的球員','誰是公牛籃球最強的球員','誰是公牛籃球最厲害的球員']
-    # testLoki(inputLIST, ['player'])
-
-    df = pd.read_csv('./intent/stats.csv')
-    
-    inputLIST = ['誰是國王隊最強的球員'] 
-    filterLIST = []
-    resultDICT = runLoki(inputLIST, filterLIST)
-    team = resultDICT['team'][0]
-    stats = df[(df['team']==team) & (df['season']==2020)]
-    player = stats.loc[stats['pts_per_game']==max(stats['pts_per_game'])]  
-    print(player['player_name'].values[0], '平均每場得分', round(player['pts_per_game'].values[0], 2))
+    main()
