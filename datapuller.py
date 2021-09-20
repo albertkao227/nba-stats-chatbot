@@ -1,19 +1,19 @@
 class DataPuller():
-    def get_single_game_stats(stat, value, team, year):
+    def get_player_single_game_stats(stat, player_name, season):
         query = f"""
             select 
             player_name, 
             {stat} as target_stat
             from df 
-            where {stat} > {value}
-            and season = {year}
-            and team = '{team}'
+            where season = {season}
+            and player_name = '{player_name}'
             order by {stat} desc
             limit 1
         """
+        print(query)
         return query
 
-    def get_agg_stats(stat, value, team, year):
+    def get_player_agg_stats(stat, player_name, season):
         query = f"""
             select 
             player_name, 
@@ -21,12 +21,26 @@ class DataPuller():
             count(game_id) as total_games,
             sum({stat}) / count(game_id) as target_stat
             from df 
-            where season = {year}
+            where season = {season}
+            and player_name = '{player_name}'
+            group by player_name
+        """
+        print(query)
+        return query
+
+    def get_team_best_player_stats(stat, team, season):
+        query = f"""
+            select 
+            player_name, 
+            sum({stat}) as agg_stats, 
+            count(game_id) as total_games,
+            sum({stat}) / count(game_id) as target_stat
+            from df 
+            where season = {season}
             and team = '{team}'
             group by player_name
-            having agg_stats > {value}
             order by agg_stats desc
-            limit 1 
+            limit 1
         """
         print(query)
         return query
@@ -44,6 +58,3 @@ class DataPuller():
             order by total_games desc
         """
         return query
-
-    def get_consecutive_games_stats(num_games, stat, value, year):
-        pass
