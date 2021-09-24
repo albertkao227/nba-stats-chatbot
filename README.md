@@ -1,6 +1,6 @@
 # NBA紀錄查詢聊天機器人
 
-提供2016至2020球季單場球賽數據查詢
+提供2017至2020球季單場球賽數據查詢
 
 ### 查詢範圍
 - 球員單季平均數據
@@ -13,6 +13,11 @@
 - 2018賽季 Aaron Gordon 單場最高籃板
 - 2020公牛單場抄截最多的球員
 
+### 資料出處
+- reference: https://www.kaggle.com/nathanlauga/nba-games 
+- data source: https://www.nba.com/stats/
+
+
 ### 設置環境
 ` Python 3.7 ` 
 
@@ -23,6 +28,8 @@ pip install ArticutAPI
 ```
 
 ### 聯絡E-Mail
+
+Albert Kao albertkao227@gmail.com
 
 
 
