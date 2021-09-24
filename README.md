@@ -29,6 +29,16 @@
 
 ![loki](./media/screenshot1.png)
 
+## 註冊Discord帳號
+
+1. 至[Discord](https://discord.com/)註冊帳號並登入
+
+2. 前往[Discord developer](https://discord.com/developers/docs/intro)
+
+3. 點擊「New Application」建立 Discord Bot
+
+![discord bot](./media/screenshot2.png)
+
 ## 安裝套件
 - ArticutAPI
 ```command
