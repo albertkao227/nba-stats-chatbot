@@ -52,7 +52,7 @@ class BotClient(discord.Client):
                 await message.reply('pong pong')
             else:
                 
-                df = pd.read_csv('./test_data.csv')
+                df = pd.read_csv('./data.csv')
 
                 for name in list(set(df['player_name'])):
                     if name in msg:
@@ -91,11 +91,13 @@ class BotClient(discord.Client):
                 else:
                     raise ValueError('invalid input') 
 
-
                 result = ps.sqldf(qry, locals())
+                reply_message = info_fields['season'] + ' ' + info_fields['player'] + ' ' + \
+                                info_fields['level'] + ' game ' + \
+                                statDICT[info_fields['stat']][0] + ' ' + str(round(result['target_stat'].iloc[0], 1))
+  
+                await message.reply(reply_message)
 
-                await message.reply(result)
-                
         
 
 if __name__ == "__main__":
