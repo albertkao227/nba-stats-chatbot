@@ -27,7 +27,7 @@
 
 2. 登入會員之後，點擊「工具」選取Loki：NLU理解引擎
 
-![loki](./screenshot1.png)
+![loki](./media/screenshot1.png)
 
 ## 安裝套件
 - ArticutAPI
