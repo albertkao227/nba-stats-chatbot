@@ -35,57 +35,28 @@ def get_team(resultDICT, args):
                 resultDICT['team'].append(key)
     return resultDICT
 
-
 # 將符合句型的參數列表印出。這是 debug 或是開發用的。
 def debugInfo(inputSTR, utterance):
     if DEBUG_player:
         print("[player] {} ===> {}".format(inputSTR, utterance))
 
-
 def getResult(inputSTR, utterance, args, resultDICT):
     debugInfo(inputSTR, utterance)
     resultDICT['team'] = []
-    if utterance == "[公牛][主力]是誰":
+
+    if utterance == "[公牛隊][平均][得分]最多是誰":
         resultDICT = get_team(resultDICT, args)
         pass
 
-    if utterance == "[公牛]誰是[主力]":
+    if utterance == "[公牛隊][平均][得分]最多的球員":
         resultDICT = get_team(resultDICT, args)
         pass
 
-    if utterance == "誰是[公牛][最強]的球員":
+    if utterance == "[公牛隊][平均][得分]最高是誰":
         resultDICT = get_team(resultDICT, args)
         pass
 
-    if utterance == "誰是[公牛]的[主力]":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "誰是[公牛]籃球[最強]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019][公牛隊][平均][得分][最多]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019][公牛隊][平均][得分]超過[30]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019][球季][公牛隊][平均][得分][最多]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019][球季][公牛隊][平均][得分]超過[30]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019年][公牛隊][平均][得分][最多]的球員":
-        resultDICT = get_team(resultDICT, args)
-        pass
-
-    if utterance == "[2019年][公牛隊][平均][得分]超過[30]的球員":
+    if utterance == "[公牛隊][平均][得分]最高的球員":
         resultDICT = get_team(resultDICT, args)
         pass
 
