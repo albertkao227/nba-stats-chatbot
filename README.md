@@ -1,4 +1,4 @@
-# NBA紀錄查詢聊天機器人
+# NBA紀錄對話查詢機器人
 
 提供2017至2020球季單場球賽數據查詢
 
@@ -9,9 +9,9 @@
 - 單季球隊個人單場最高數據
 
 ## 查詢範例
-- Russell Westbrook 2020球季平均得分
-- 2018賽季 Aaron Gordon 單場最高籃板
-- 2020公牛單場抄截最多的球員
+- “Russell Westbrook 2020球季平均得分”
+- ”2018賽季 Aaron Gordon 單場最高籃板“
+- “2020公牛單場抄截最多的球員”
 
 ## 資料出處
 - reference: https://www.kaggle.com/nathanlauga/nba-games 

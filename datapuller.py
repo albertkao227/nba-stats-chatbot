@@ -2,6 +2,7 @@ class DataPuller():
     def get_player_single_game_stats(stat, player_name, season):
         query = f"""
             select 
+            team, 
             player_name, 
             {stat} as target_stat
             from df 
@@ -16,6 +17,7 @@ class DataPuller():
     def get_player_agg_stats(stat, player_name, season):
         query = f"""
             select 
+            team, 
             player_name, 
             sum({stat}) as agg_stats, 
             count(game_id) as total_games,
@@ -23,7 +25,7 @@ class DataPuller():
             from df 
             where season = {season}
             and player_name = '{player_name}'
-            group by player_name
+            group by team, player_name
         """
         print(query)
         return query
