@@ -166,7 +166,7 @@ class LokiResult():
 
 
 def runLoki(inputLIST, filterLIST=[]):
-    resultDICT = {}
+    resultDICT = {'team':[]}
     lokiRst = LokiResult(inputLIST, filterLIST)
     if lokiRst.getStatus():
         for index, key in enumerate(inputLIST):
