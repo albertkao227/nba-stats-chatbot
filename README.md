@@ -29,6 +29,11 @@
 
 ![loki](./media/screenshot1.png)
 
+3. 建立Loki專案並匯入ref檔
+
+4. 複製金鑰於 account.info 檔案中
+
+
 ## 註冊Discord帳號
 
 1. 至[Discord](https://discord.com/)註冊帳號並登入
@@ -38,6 +43,18 @@
 3. 點擊「New Application」建立 Discord Bot
 
 ![discord bot](./media/screenshot2.png)
+
+4. 複製 discord token 於 account.info 檔案中如下範例
+
+```
+{
+    "username": "youremail@gmail.com",
+    "loki_project_key": "loki_project_key_here",
+    "apikey": "driodtown_api_key_here",
+    "discord_token": "discord_token_here"
+}
+
+```
 
 ## 安裝套件
 - ArticutAPI
