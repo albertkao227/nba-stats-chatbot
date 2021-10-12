@@ -18,16 +18,11 @@ info_fields = {'season': None,
                 'stat': None,
                 'level': None} 
 
+
 statDICT = {'pts':['得分'], 
             'reb':['籃板', '搶籃板'], 'ast':['助攻'], 
             'blk':['阻攻', '火鍋', '蓋火鍋','搧帽', '蓋帽'], 
             'stl':['抄截']}
-
-seasonDICT = {'2016':['2016', '2016球季', '2016賽季', '二零一六球季', '二零一六賽季'], 
-              '2017':['2017', '2017球季', '2017賽季', '二零一七球季', '二零一七賽季'],
-              '2018':['2018', '2018球季', '2018賽季', '二零一八球季', '二零一八賽季'],
-              '2019':['2019', '2019球季', '2019賽季', '二零一九球季', '二零一九賽季'],
-              '2020':['2020', '2020球季', '2020賽季', '二零二零球季', '二零二零賽季']}
 
 
 class BotClient(discord.Client):
@@ -52,24 +47,21 @@ class BotClient(discord.Client):
                 await message.reply('pong pong')
             else:
                 
-                df = pd.read_csv('./data.csv')
+                df = pd.read_csv('../media/data.csv')
 
-                for name in list(set(df['player_name'])):
-                    if name in msg:
-                        info_fields['player'] = name
-                        msg = msg.replace(name, '').strip()
-                        
-                for season_key in seasonDICT.keys():
-                    for year in seasonDICT[season_key]:
-                        if year in msg:
-                            info_fields['season'] = season_key
-                            msg = msg.replace(year, '').strip()
+                msg, info_fields = get_playername(msg, info_fields)
+                msg, info_fields = get_season(msg, info_fields)        
 
                 filterLIST = []
                 resultDICT = runLoki([msg], filterLIST)   
                 
-                if len(resultDICT['team']) > 0:
+                # if len(resultDICT['team']) > 0:
+                #     info_fields['team'] = resultDICT['team'][0]
+
+                try:
                     info_fields['team'] = resultDICT['team'][0]
+                except:
+                    pass
                 
                 info_fields['stat'] = resultDICT['stat'][0]
                 info_fields['level'] = resultDICT['level']
