@@ -190,6 +190,33 @@ def testLoki(inputLIST, filterLIST):
         resultDICT = runLoki(inputLIST[i*INPUT_LIMIT:(i+1)*INPUT_LIMIT], filterLIST)
 
 
+def get_playername(msg, info_fields):
+    """find playname in message"""
+    df = pd.read_csv('./media/data.csv')
+    playname_list = list(set(df['player_name']))
+    for name in playname_list:
+        if name in msg:
+            info_fields['player'] = name
+            msg = msg.replace(name, '').strip()
+    return msg, info_fields
+
+
+def get_season(msg, info_fields):
+    """find season in message"""
+    seasonDICT = {'2016':['二零一六球季', '二零一六賽季', '2016球季', '2016賽季', '2016年', '2016'], 
+                  '2017':['二零一七球季', '二零一七賽季', '2017球季', '2017賽季', '2017年', '2017'],
+                  '2018':['二零一八球季', '二零一八賽季', '2018球季', '2018賽季', '2018年', '2018'],
+                  '2019':['二零一九球季', '二零一九賽季', '2019球季', '2019賽季', '2019年', '2019'],
+                  '2020':['二零二零球季', '二零二零賽季', '2020球季', '2020賽季', '2020年', '2020']}
+    for season_key in seasonDICT.keys():
+        for year in seasonDICT[season_key]:
+            if year in msg:
+                info_fields['season'] = season_key
+                msg = msg.replace(year, '').strip()
+                return  msg, info_fields
+    return msg, info_fields
+  
+
 def main():
     return 
 
