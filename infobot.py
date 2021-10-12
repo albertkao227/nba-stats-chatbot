@@ -47,7 +47,7 @@ class BotClient(discord.Client):
                 await message.reply('pong pong')
             else:
                 
-                df = pd.read_csv('../media/data.csv')
+                df = pd.read_csv('./media/data.csv')
 
                 msg, info_fields = get_playername(msg, info_fields)
                 msg, info_fields = get_season(msg, info_fields)        
@@ -55,13 +55,11 @@ class BotClient(discord.Client):
                 filterLIST = []
                 resultDICT = runLoki([msg], filterLIST)   
                 
-                # if len(resultDICT['team']) > 0:
-                #     info_fields['team'] = resultDICT['team'][0]
-
-                try:
+                if len(resultDICT['team']) > 0:
                     info_fields['team'] = resultDICT['team'][0]
-                except:
-                    pass
+                    team = resultDICT['team'][0]
+                else:
+                    team = ''
                 
                 info_fields['stat'] = resultDICT['stat'][0]
                 info_fields['level'] = resultDICT['level']
@@ -84,9 +82,7 @@ class BotClient(discord.Client):
                     raise ValueError('invalid input') 
 
                 result = ps.sqldf(qry, locals())
-                reply_message = info_fields['season'] + ' ' + info_fields['player'] + ' ' + \
-                                info_fields['level'] + ' game ' + \
-                                statDICT[info_fields['stat']][0] + ' ' + str(round(result['target_stat'].iloc[0], 1))
+                reply_message = str(info_fields['season']) + ' ' + team + ' ' + result['player_name'] + ' ' + info_fields['level'] + ' ' + statDICT[info_fields['stat']][0] + ' ' + str(round(result['target_stat'].iloc[0], 1))
   
                 await message.reply(reply_message)
 
