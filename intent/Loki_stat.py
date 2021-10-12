@@ -119,4 +119,25 @@ def getResult(inputSTR, utterance, args, resultDICT):
         resultDICT = get_stat(resultDICT, args[0])
         pass
 
+    if utterance == "平均[籃板]最多":
+        resultDICT['level'] = 'avg'
+        resultDICT = get_stat(resultDICT, args[0])
+        pass
+
+    if utterance == "平均[籃板]最高":
+        resultDICT['level'] = 'avg'
+        resultDICT = get_stat(resultDICT, args[0])
+        pass
+
+    if utterance == "單場[籃板]最多":
+        resultDICT['level'] = 'single'
+        resultDICT = get_stat(resultDICT, args[0])
+        pass
+
+    if utterance == "單場[籃板]最高":
+        resultDICT['level'] = 'single'
+        resultDICT = get_stat(resultDICT, args[0])
+        pass
+
+
     return resultDICT
